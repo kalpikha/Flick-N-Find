@@ -24,7 +24,8 @@ def fetch_poster(movie_id):
     api_key = st.secrets['API_KEY']
     response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}&language=en-US'.format(movie_id, api_key))
     data = response.json()
-    return "https://image.tmdb.org/t/p/w500/" + data['poster_path']
+    ratings = round(data['vote_average'],1)
+    return "https://image.tmdb.org/t/p/w500/" + data['poster_path'], ratings
 
 def recommend_movies(movie):
     index = movies_df[movies_df['title'] == movie].index[0]
@@ -32,28 +33,35 @@ def recommend_movies(movie):
 
     recommended_movies = []
     movie_posters = []
+    movie_ratings = []
     for i in distances[1:5]:
         movie_id = movies_df.iloc[i[0]].movie_id
         recommended_movies.append(movies_df.iloc[i[0]].title)
-        movie_posters.append(fetch_poster(movie_id))
-    return recommended_movies, movie_posters
+        p, r = fetch_poster_ratings(movie_id)
+        movie_posters.append(p)
+        movie_ratings.append(r)
+
+    return recommended_movies, movie_posters, movie_ratings
 
 
 if st.button('Get Recommendations'):
     # st.write('Here are your top recommendations !!')
-    movie_names, movie_posters = recommend_movies(option)
+    movie_names, movie_posters, movies_ratings = recommend_movies(option)
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.caption(movie_names[0])
         st.image(movie_posters[0])
+        st.caption('{} :star: '.format(movies_ratings[0]))
     with col2:
         st.caption(movie_names[1])
         st.image(movie_posters[1])
+        st.caption('{} :star: '.format(movies_ratings[1]))
 
     with col3:
         st.caption(movie_names[2])
         st.image(movie_posters[2])
+        st.caption('{} :star: '.format(movies_ratings[2]))
     with col4:
         st.caption(movie_names[3])
         st.image(movie_posters[3])
-
+        st.caption('{} :star: '.format(movies_ratings[3]))
