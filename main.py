@@ -21,7 +21,8 @@ option = st.selectbox(
     movies_df['title'].values)
 
 def fetch_poster(movie_id):
-    response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key=5eff1cc96866d62e856adb3550188b65&language=en-US'.format(movie_id))
+    api_key = st.secrets['API_KEY']
+    response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}&language=en-US'.format(movie_id, api_key))
     data = response.json()
     return "https://image.tmdb.org/t/p/w500/" + data['poster_path']
 
