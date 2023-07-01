@@ -22,6 +22,10 @@ similarity = decompress_pickle('models/similarity.pbz2')
 
 st.title('Flick N Find 🎬')
 
+option = st.selectbox(
+    'Select your movie',
+    movies_df['title'].values)
+
 def fetch_poster_ratings(movie_id):
     api_key = st.secrets['API_KEY']
     response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}&language=en-US'.format(movie_id, api_key))
