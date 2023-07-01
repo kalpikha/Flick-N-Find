@@ -55,19 +55,19 @@ if st.button('Get Recommendations'):
     movie_names, movie_posters, movies_ratings = recommend_movies(option)
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.caption(movie_names[0])
+        st.text(movie_names[0])
         st.image(movie_posters[0])
         st.caption('{} :star: '.format(movies_ratings[0]))
     with col2:
-        st.caption(movie_names[1])
+        st.text(movie_names[1])
         st.image(movie_posters[1])
         st.caption('{} :star: '.format(movies_ratings[1]))
 
     with col3:
-        st.caption(movie_names[2])
+        st.text(movie_names[2])
         st.image(movie_posters[2])
         st.caption('{} :star: '.format(movies_ratings[2]))
     with col4:
-        st.caption(movie_names[3])
+        st.text(movie_names[3])
         st.image(movie_posters[3])
         st.caption('{} :star: '.format(movies_ratings[3]))
