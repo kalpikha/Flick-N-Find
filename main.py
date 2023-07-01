@@ -4,6 +4,11 @@ import requests
 import pickle
 import bz2file as bz2
 
+st.set_page_config(
+    page_title="Flick N Find",
+    page_icon="🎬"
+)
+
 def decompress_pickle(file):
 
     data = bz2.BZ2File(file, 'rb')
@@ -15,10 +20,7 @@ movies_df = pd.DataFrame(movies_dict)
 
 similarity = decompress_pickle('models/similarity.pbz2')
 
-st.title('Flick N Find')
-option = st.selectbox(
-    'Select your movie',
-    movies_df['title'].values)
+st.title('Flick N Find 🎬')
 
 def fetch_poster_ratings(movie_id):
     api_key = st.secrets['API_KEY']
